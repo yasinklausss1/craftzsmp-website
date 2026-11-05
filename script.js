@@ -256,10 +256,68 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe stat numbers (disabled - waiting for real data)
-// document.querySelectorAll('.stat-number').forEach(stat => {
-//     observer.observe(stat);
-// });
+// Observe stat numbers
+const statElements = document.querySelectorAll('.stat-number');
+statElements.forEach(stat => {
+    observer.observe(stat);
+});
+
+// ==========================================
+// LIVE SERVER STATS FETCHER (/api/stats)
+// ==========================================
+async function fetchServerStats() {
+    try {
+        const response = await fetch('/api/stats');
+        if (!response.ok) return;
+        const data = await response.json();
+
+        // 1. Update Live Player Count in Hero Header
+        const onlineCountEl = document.getElementById('onlineCount');
+        if (onlineCountEl && typeof data.onlinePlayers === 'number') {
+            onlineCountEl.textContent = data.onlinePlayers;
+        }
+
+        // 2. Update Stats Data Targets
+        const regEl = document.getElementById('statRegisteredPlayers');
+        if (regEl && data.registeredPlayers) {
+            regEl.setAttribute('data-target', data.registeredPlayers);
+            if (!regEl.hasAttribute('data-target') || regEl.classList.contains('visible')) {
+                animateCounter(regEl);
+            }
+        }
+
+        const moneyEl = document.getElementById('statMoneyCirculation');
+        if (moneyEl && data.moneyCirculation) {
+            moneyEl.setAttribute('data-target', data.moneyCirculation);
+            if (moneyEl.classList.contains('visible')) {
+                animateCounter(moneyEl);
+            }
+        }
+
+        const questEl = document.getElementById('statQuestsCompleted');
+        if (questEl && data.questsCompleted) {
+            questEl.setAttribute('data-target', data.questsCompleted);
+            if (questEl.classList.contains('visible')) {
+                animateCounter(questEl);
+            }
+        }
+
+        const homesEl = document.getElementById('statHomesSet');
+        if (homesEl && data.homesSet) {
+            homesEl.setAttribute('data-target', data.homesSet);
+            if (homesEl.classList.contains('visible')) {
+                animateCounter(homesEl);
+            }
+        }
+    } catch (e) {
+        // Fallback already pre-filled in HTML data-target attributes
+        console.log('Using default stats fallback');
+    }
+}
+
+// Fetch stats immediately and then refresh every 60 seconds
+fetchServerStats();
+setInterval(fetchServerStats, 60000);
 
 // Observe feature boxes
 document.querySelectorAll('.feature-box').forEach((box, index) => {
