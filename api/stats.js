@@ -10,10 +10,22 @@ const DEFAULT_STATS = {
 
 const SYNC_SECRET = process.env.STATS_SYNC_SECRET || "craftz_secret_sync_2026";
 
-async function getFromRedis() {
-    const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-    const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+function getRedisConfig() {
+    const url = process.env.KV_REST_API_URL || 
+                process.env.UPSTASH_REDIS_REST_URL || 
+                process.env.UPSTASH_REST_API_URL || 
+                process.env.REDIS_REST_URL;
 
+    const token = process.env.KV_REST_API_TOKEN || 
+                  process.env.UPSTASH_REDIS_REST_TOKEN || 
+                  process.env.UPSTASH_REST_API_TOKEN || 
+                  process.env.REDIS_REST_TOKEN;
+
+    return { url, token };
+}
+
+async function getFromRedis() {
+    const { url, token } = getRedisConfig();
     if (!url || !token) return null;
 
     try {
@@ -32,9 +44,7 @@ async function getFromRedis() {
 }
 
 async function saveToRedis(statsData) {
-    const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-    const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-
+    const { url, token } = getRedisConfig();
     if (!url || !token) return false;
 
     try {
@@ -120,6 +130,8 @@ module.exports = async function handler(req, res) {
         const onlinePlayers = pingData && pingData.players ? (pingData.players.online || 0) : 0;
         const maxPlayers = pingData && pingData.players ? (pingData.players.max || 50) : 50;
 
+        const redisConfig = getRedisConfig();
+
         res.status(200).json({
             success: true,
             online: isOnline,
@@ -131,6 +143,7 @@ module.exports = async function handler(req, res) {
             moneyCirculation: mergedStats.moneyCirculation,
             questsCompleted: mergedStats.questsCompleted,
             homesSet: mergedStats.homesSet,
+            redisConfigured: Boolean(redisConfig.url && redisConfig.token),
             lastUpdated: mergedStats.lastUpdated || Date.now()
         });
         return;
