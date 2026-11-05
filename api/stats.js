@@ -62,7 +62,7 @@ async function getFromRedis() {
 
 async function saveToRedis(statsData) {
     const { url, token } = getRedisConfig();
-    if (!url || !token) return false;
+    if (!url || !token) return { ok: false, error: "Missing url or token" };
 
     try {
         const payloadString = JSON.stringify(statsData);
@@ -74,14 +74,11 @@ async function saveToRedis(statsData) {
             },
             body: JSON.stringify(["SET", "craftz_stats", payloadString])
         });
-        if (response.ok) {
-            const data = await response.json();
-            return Boolean(data && data.result === "OK");
-        }
+        const text = await response.text();
+        return { ok: response.ok, status: response.status, raw: text };
     } catch (err) {
-        console.error("Redis save error:", err);
+        return { ok: false, error: err.message };
     }
-    return false;
 }
 
 async function fetchLivePing() {
@@ -132,7 +129,7 @@ module.exports = async function handler(req, res) {
         };
 
         const saved = await saveToRedis(newStats);
-        res.status(200).json({ success: true, saved, stats: newStats });
+        res.status(200).json({ success: true, saved: saved.ok, debug: saved, stats: newStats });
         return;
     }
 
