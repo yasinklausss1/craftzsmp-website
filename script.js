@@ -101,7 +101,7 @@ function showCopySuccess(ipEl) {
 function copyJoinField(text, element) {
     if (!element) return;
     const badge = element.querySelector('.copy-badge');
-    const originalBadgeText = badge ? badge.textContent : '📋 Kopieren';
+    const originalBadgeText = badge ? badge.textContent : 'Kopieren';
 
     const triggerSuccess = () => {
         if (badge) {
@@ -377,9 +377,10 @@ document.head.appendChild(rippleStyle);
 // RANDOM STEVE POSITION (Easter Egg)
 // ==========================================
 const steveContainer = document.querySelector('.steve-gif-container');
-if (steveContainer && window.innerWidth > 768) {
+if (steveContainer) {
     setInterval(() => {
-        const randomX = Math.random() * 20 + 5; // 5-25%
+        const isMobile = window.innerWidth <= 768;
+        const randomX = isMobile ? (Math.random() * 3 + 2) : (Math.random() * 20 + 5);
         steveContainer.style.right = randomX + '%';
         steveContainer.style.transition = 'all 3s ease-in-out';
     }, 8000);
@@ -422,12 +423,11 @@ function activateMinecraftMode() {
 function createFloatingSteve() {
     const steve = document.createElement('div');
     steve.style.position = 'fixed';
-    steve.style.width = '40px';
-    steve.style.height = '60px';
+    steve.style.width = '48px';
+    steve.style.height = '48px';
     steve.style.left = Math.random() * window.innerWidth + 'px';
     steve.style.top = '-60px';
-    steve.style.fontSize = '40px';
-    steve.textContent = '🧑';
+    steve.innerHTML = '<img src="icons/player.png" alt="Steve" style="width:100%;height:100%;image-rendering:pixelated;display:block;">';
     steve.style.zIndex = '9999';
     steve.style.pointerEvents = 'none';
     steve.style.transition = 'all 3s ease-out';
@@ -496,11 +496,11 @@ console.log(
     'font-family: monospace; font-size: 12px; color: #8B6F47;'
 );
 console.log(
-    '%c\n🎮 Suchst du nach Geheimnissen?\nVersuch den Konami Code: ↑↑↓↓←→←→BA\n',
+    '%c\nSuchst du nach Geheimnissen?\nVersuch den Konami Code: ↑↑↓↓←→←→BA\n',
     'font-size: 13px; color: #55FFFF;'
 );
 console.log(
-    '%c💼 Interesse am Development?\nSchreib uns auf Discord: discord.gg/JNyefdvkBc',
+    '%cInteresse am Development?\nSchreib uns auf Discord: discord.gg/JNyefdvkBc',
     'font-size: 12px; color: #5865F2; font-weight: bold;'
 );
 

@@ -118,5 +118,5 @@ website/
 
 ---
 
-Erstellt: 04.11.2024
+Erstellt: 04.11.2026
 Version: 2.0 - Authentic Minecraft Style

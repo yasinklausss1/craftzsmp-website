@@ -42,16 +42,24 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-spawn-image">
-            <img src="spawn.jfif" alt="CraftZ Spawn" class="spawn-bg">
+            <picture class="spawn-bg-picture">
+                <source media="(max-width: 768px)" srcset="spawnformobile.jfif">
+                <img src="spawn.jfif" alt="CraftZ Spawn" class="spawn-bg">
+            </picture>
             <!-- Animated Steve GIF (hinter Blur, aber vor spawn.jfif) -->
             <div class="steve-gif-container">
                 <img src="icons/minecraft-steve.gif" alt="Steve" class="steve-gif">
             </div>
         </div>
 
-        <!-- Tagline oberhalb von Willkommen zu CraftZ SMP -->
+        <!-- Tagline & Quick Badges oberhalb von Willkommen zu CraftZ SMP -->
         <div class="hero-top">
             <p class="tagline">Der ultimative Survival Server mit <span class="highlight">Economy</span>, <span class="highlight">Quests</span> & <span class="highlight">Jobs</span>!</p>
+            <div class="hero-badges-row">
+                <span class="hero-badge-pill"><span class="badge-dot dot-emerald"></span>Bedrock 1.21+</span>
+                <span class="hero-badge-pill"><span class="badge-dot dot-gold"></span>Port: 60453</span>
+                <span class="hero-badge-pill"><span class="badge-dot dot-diamond"></span>Online 24/7</span>
+            </div>
         </div>
 
         <div class="hero-content">
@@ -87,9 +95,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">
-                    <span class="title-icon">⚔️</span>
                     Was kannst du auf CraftZ machen?
-                    <span class="title-icon">⚔️</span>
                 </h2>
                 <p class="section-subtitle">Langweilig wird's dir hier nicht!</p>
             </div>
@@ -97,7 +103,7 @@
             <div class="features-grid">
                 <!-- Feature 1 -->
                 <div class="feature-box" data-color="gold">
-                    <img src="icons/gold_ingot.png" alt="Economy" class="feature-icon-img" onerror="this.innerHTML='💰'">
+                    <img src="icons/gold_ingot.png" alt="Economy" class="feature-icon-img" onerror="this.style.display='none'">
                     <h3 class="feature-title">Wirtschaftssystem</h3>
                     <div class="feature-description">
                         <p><strong>Verdiene Geld</strong> durch Verkaufen, Handel und tägliche Belohnungen!</p>
@@ -112,7 +118,7 @@
 
                 <!-- Feature 2 -->
                 <div class="feature-box" data-color="emerald">
-                    <img src="icons/ender_pearl.png" alt="Teleport" class="feature-icon-img" onerror="this.innerHTML='🏠'">
+                    <img src="icons/ender_pearl.png" alt="Teleport" class="feature-icon-img" onerror="this.style.display='none'">
                     <h3 class="feature-title">Teleport-System</h3>
                     <div class="feature-description">
                         <p>Setze bis zu <strong>25 Homes</strong> und teleportiere dich überall hin!</p>
@@ -126,23 +132,8 @@
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="feature-box" data-color="diamond">
-                    <img src="icons/chest.png" alt="Inventory" class="feature-icon-img" onerror="this.innerHTML='📦'">
-                    <h3 class="feature-title">Unendliches Inventar</h3>
-                    <div class="feature-description">
-                        <p>Für Admins: <strong>Unbegrenzter Speicher</strong> für verkaufte Items!</p>
-                        <ul class="feature-list">
-                            <li>→ Automatische Einlagerung</li>
-                            <li>→ Kein Platz-Problem mehr</li>
-                            <li>→ Multi-Owner Support</li>
-                            <li>→ GUI-basiertes System</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Feature 4 -->
                 <div class="feature-box" data-color="redstone">
-                    <img src="icons/book.png" alt="Quests" class="feature-icon-img" onerror="this.innerHTML='📋'">
+                    <img src="icons/book.png" alt="Quests" class="feature-icon-img" onerror="this.style.display='none'">
                     <h3 class="feature-title">Quest-System</h3>
                     <div class="feature-description">
                         <p><strong>Tägliche Quests</strong> mit fetten Belohnungen!</p>
@@ -155,9 +146,9 @@
                     </div>
                 </div>
 
-                <!-- Feature 5 -->
+                <!-- Feature 4 -->
                 <div class="feature-box" data-color="iron">
-                    <img src="icons/diamond_sword.png" alt="Skills" class="feature-icon-img" onerror="this.innerHTML='⭐'">
+                    <img src="icons/diamond_sword.png" alt="Skills" class="feature-icon-img" onerror="this.style.display='none'">
                     <h3 class="feature-title">Skill-Leveling</h3>
                     <div class="feature-description">
                         <p>Levele deine Skills und werde zum <strong>Meister</strong>!</p>
@@ -170,9 +161,9 @@
                     </div>
                 </div>
 
-                <!-- Feature 6 -->
+                <!-- Feature 5 -->
                 <div class="feature-box" data-color="grass">
-                    <img src="icons/compass.png" alt="HUD" class="feature-icon-img" onerror="this.innerHTML='📊'">
+                    <img src="icons/compass.png" alt="HUD" class="feature-icon-img" onerror="this.style.display='none'">
                     <h3 class="feature-title">Live HUD-System</h3>
                     <div class="feature-description">
                         <p>Alle Infos <strong>immer im Blick</strong> - im Mineville-Style!</p>
@@ -192,9 +183,9 @@
     <section class="join-section" id="join">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
+                <h2 class="section-title title-with-icons">
                     <img src="icons/book.png" alt="Book" class="title-icon-img">
-                    So trittst du bei
+                    <span class="title-text">So trittst du bei</span>
                     <img src="icons/book.png" alt="Book" class="title-icon-img">
                 </h2>
                 <p class="section-subtitle">In 3 einfachen Schritten auf CraftZ durchstarten • Minecraft Bedrock Edition</p>
@@ -258,7 +249,7 @@
                             </div>
                             <div class="field-value-box">
                                 <span class="field-val">CraftZ</span>
-                                <span class="copy-badge">📋 Kopieren</span>
+                                <span class="copy-badge">Kopieren</span>
                             </div>
                         </div>
 
@@ -270,7 +261,7 @@
                             </div>
                             <div class="field-value-box">
                                 <span class="field-val cyan-glow">craftz.cybrancee.games</span>
-                                <span class="copy-badge">📋 Kopieren</span>
+                                <span class="copy-badge">Kopieren</span>
                             </div>
                         </div>
 
@@ -282,7 +273,7 @@
                             </div>
                             <div class="field-value-box">
                                 <span class="field-val gold-glow">60453</span>
-                                <span class="copy-badge">📋 Kopieren</span>
+                                <span class="copy-badge">Kopieren</span>
                             </div>
                         </div>
                     </div>
@@ -298,9 +289,9 @@
                     <div class="platform-support">
                         <span class="platform-title">Kompatible Plattformen:</span>
                         <div class="platform-pills">
-                            <span class="platform-pill">📱 iOS / Android</span>
-                            <span class="platform-pill">💻 Windows 10/11</span>
-                            <span class="platform-pill">🎮 Xbox / PlayStation / Switch</span>
+                            <span class="platform-pill">iOS / Android</span>
+                            <span class="platform-pill">Windows 10/11</span>
+                            <span class="platform-pill">Xbox / PlayStation / Switch</span>
                         </div>
                     </div>
                 </div>
@@ -315,7 +306,7 @@
                         <img src="how-to-join.png" alt="Minecraft Bedrock Server hinzufügen Anleitung" class="join-guide-img">
                     </div>
                     <div class="preview-caption">
-                        <span class="caption-icon">✔</span>
+                        <span class="caption-icon">✓</span>
                         Einfach genau so wie im Bild eintragen und auf <strong>Spielen</strong> klicken!
                     </div>
                 </div>
@@ -359,7 +350,7 @@
                 <div class="team-card">
                     <div class="minecraft-player-card">
                         <div class="player-head">
-                            <img src="https://mc-heads.net/avatar/PichPich1/128" alt="PichPich1">
+                            <img src="https://mc-heads.net/avatar/Mishu7510/128" alt="PichPich1">
                         </div>
                         <div class="player-info">
                             <h3 class="player-name">PichPich1</h3>
@@ -385,9 +376,9 @@
     <section class="stats-section" id="stats">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
+                <h2 class="section-title title-with-icons">
                     <img src="icons/online.png" alt="Stats" class="title-icon-img">
-                    Server Statistiken
+                    <span class="title-text">Server Statistiken</span>
                     <img src="icons/online.png" alt="Stats" class="title-icon-img">
                 </h2>
                 <p class="section-subtitle">Zahlen lügen nicht!</p>
@@ -395,22 +386,22 @@
 
             <div class="stats-grid">
                 <div class="stat-block">
-                    <img src="icons/player.png" alt="Players" class="stat-icon-img" onerror="this.innerHTML='👥'">
+                    <img src="icons/player.png" alt="Players" class="stat-icon-img" onerror="this.style.display='none'">
                     <div class="stat-number">Bald verfügbar</div>
                     <div class="stat-label">Registrierte Spieler</div>
                 </div>
                 <div class="stat-block">
-                    <img src="icons/emerald.png" alt="Money" class="stat-icon-img" onerror="this.innerHTML='💰'">
+                    <img src="icons/emerald.png" alt="Money" class="stat-icon-img" onerror="this.style.display='none'">
                     <div class="stat-number">Bald verfügbar</div>
                     <div class="stat-label">Geld im Umlauf</div>
                 </div>
                 <div class="stat-block">
-                    <img src="icons/book.png" alt="Quests" class="stat-icon-img" onerror="this.innerHTML='✅'">
+                    <img src="icons/book.png" alt="Quests" class="stat-icon-img" onerror="this.style.display='none'">
                     <div class="stat-number">Bald verfügbar</div>
                     <div class="stat-label">Quests abgeschlossen</div>
                 </div>
                 <div class="stat-block">
-                    <img src="icons/bed.png" alt="Homes" class="stat-icon-img" onerror="this.innerHTML='🏠'">
+                    <img src="icons/bed.png" alt="Homes" class="stat-icon-img" onerror="this.style.display='none'">
                     <div class="stat-number">Bald verfügbar</div>
                     <div class="stat-label">Homes gesetzt</div>
                 </div>
@@ -449,7 +440,7 @@
                     </div>
                     <p class="footer-tagline">
                         Premium Minecraft Bedrock Server<br>
-                        Made with ❤️ by cybrancee.games
+                        gemacht mit liebe von CraftZ Team
                     </p>
                 </div>
                 <div class="footer-links">
@@ -460,7 +451,7 @@
                             <li><a href="#join">Beitreten</a></li>
                             <li><a href="#team">Team</a></li>
                             <li><a href="#stats">Stats</a></li>
-                            <li><a href="#">Regeln</a></li>
+                            <li><a href="regeln.html">Regeln</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
@@ -474,14 +465,14 @@
                     <div class="footer-col">
                         <h4>Legal</h4>
                         <ul>
-                            <li><a href="#">Impressum</a></li>
-                            <li><a href="#">Datenschutz</a></li>
+                            <li><a href="impressum.html">Impressum</a></li>
+                            <li><a href="datenschutz.html">Datenschutz</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 CraftZ Server • Nicht mit Mojang verbunden</p>
+                <p>&copy; 2026 CraftZ Server • Nicht mit Mojang verbunden • <a href="regeln.html">Regeln</a> • <a href="impressum.html">Impressum</a> • <a href="datenschutz.html">Datenschutz</a></p>
             </div>
         </div>
     </footer>

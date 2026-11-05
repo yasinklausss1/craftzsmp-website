@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server-Regeln • CraftZ SMP</title>
+    <meta name="description" content="Offizielles Regelwerk des CraftZ Minecraft Bedrock Survival Servers. Faires Gameplay, Wirtschaft, Bauschutz und Respekt.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="craftzlogo.png">
+    <style>
+        .rules-hero {
+            padding: 120px 30px 60px;
+            text-align: center;
+            position: relative;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(30, 37, 48, 0.95) 0%, rgba(22, 27, 34, 0.98) 100%);
+            border-bottom: 3px solid #0D0D0D;
+            box-shadow: 0 4px 0 #0D0D0D;
+        }
+
+        .rules-hero-badge {
+            display: inline-block;
+            background: rgba(194, 39, 45, 0.15);
+            border: 1px solid rgba(194, 39, 45, 0.5);
+            color: #C2272D;
+            font-family: 'Silkscreen', monospace;
+            font-size: 11px;
+            letter-spacing: 2px;
+            padding: 4px 14px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        .rules-hero h1 {
+            font-family: 'Silkscreen', monospace;
+            font-size: 38px;
+            color: #C2272D;
+            text-shadow:
+                2px 2px 0px #681216,
+                4px 4px 0px #290709,
+                6px 6px 0px #0D0D0D;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .rules-hero-sub {
+            font-size: 14px;
+            color: #8B98A5;
+            font-family: 'Silkscreen', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .rules-page {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 50px 30px 80px;
+        }
+
+        .rules-intro-card {
+            background: rgba(22, 27, 34, 0.95);
+            border: 2px solid #0D0D0D;
+            border-left: 4px solid #D4A359;
+            box-shadow: 4px 4px 0 #0D0D0D;
+            padding: 24px 28px;
+            margin-bottom: 32px;
+            border-radius: 2px;
+        }
+
+        .rules-intro-card h2 {
+            font-family: 'Silkscreen', monospace;
+            font-size: 15px;
+            color: #D4A359;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .rules-intro-card p {
+            font-size: 14px;
+            color: #C8CDD4;
+            line-height: 1.75;
+            margin: 0;
+            font-family: 'Mojangles', 'Silkscreen', monospace;
+        }
+
+        .rules-section {
+            background: rgba(27, 34, 44, 0.88);
+            border: 2px solid #0D0D0D;
+            box-shadow: 4px 4px 0 #0D0D0D;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            border-radius: 2px;
+            transition: border-color 0.15s ease;
+        }
+
+        .rules-section:hover {
+            border-color: rgba(212, 163, 89, 0.5);
+        }
+
+        .rules-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-bottom: 14px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(212, 163, 89, 0.25);
+        }
+
+        .rules-section-title {
+            font-family: 'Silkscreen', monospace;
+            font-size: 16px;
+            color: #D4A359;
+            text-shadow: 2px 2px 0 #0D0D0D;
+            letter-spacing: 0.8px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rules-section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #C2272D;
+            box-shadow: 1px 1px 0 #681216;
+            flex-shrink: 0;
+        }
+
+        .rules-tag {
+            font-family: 'Silkscreen', monospace;
+            font-size: 10px;
+            padding: 3px 8px;
+            letter-spacing: 0.5px;
+            border-radius: 2px;
+            border: 1px solid #0D0D0D;
+        }
+
+        .tag-important {
+            background: rgba(194, 39, 45, 0.25);
+            color: #FF6B6B;
+            border-color: #C2272D;
+        }
+
+        .tag-economy {
+            background: rgba(212, 163, 89, 0.2);
+            color: #E8C584;
+            border-color: #D4A359;
+        }
+
+        .tag-fairplay {
+            background: rgba(56, 163, 199, 0.2);
+            color: #38A3C7;
+            border-color: #38A3C7;
+        }
+
+        .rules-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(13, 17, 23, 0.55);
+            border: 1px solid rgba(22, 27, 34, 0.9);
+            padding: 12px 16px;
+            border-radius: 2px;
+        }
+
+        .rule-bullet {
+            font-family: 'Silkscreen', monospace;
+            color: #D4A359;
+            font-size: 13px;
+            line-height: 1.6;
+            flex-shrink: 0;
+        }
+
+        .rule-text {
+            font-size: 13.5px;
+            color: #C8CDD4;
+            line-height: 1.7;
+            margin: 0;
+            font-family: 'Mojangles', 'Silkscreen', monospace;
+        }
+
+        .rule-text strong {
+            color: #FFFFFF;
+        }
+
+        .rule-text .highlight-red {
+            color: #FF7B7B;
+            font-weight: 600;
+        }
+
+        .rule-text .highlight-gold {
+            color: #E8C584;
+            font-weight: 600;
+        }
+
+        .rules-support-banner {
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95), rgba(33, 41, 52, 0.95));
+            border: 2px solid #0D0D0D;
+            box-shadow: 4px 4px 0 #0D0D0D;
+            padding: 30px 32px;
+            margin-top: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-radius: 2px;
+        }
+
+        .rules-support-content h3 {
+            font-family: 'Silkscreen', monospace;
+            font-size: 15px;
+            color: #D4A359;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .rules-support-content p {
+            font-size: 13px;
+            color: #8B98A5;
+            margin: 0;
+            line-height: 1.6;
+            font-family: 'Mojangles', 'Silkscreen', monospace;
+        }
+
+        .back-link-wrap {
+            text-align: center;
+            margin-top: 40px;
+            padding-bottom: 10px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Silkscreen', monospace;
+            font-size: 12px;
+            color: #8B98A5;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            border: 1px solid #0D0D0D;
+            padding: 8px 20px;
+            background: rgba(27, 34, 44, 0.85);
+            box-shadow: 3px 3px 0 #0D0D0D;
+            transition: color 0.15s ease, background 0.15s ease;
+        }
+
+        .back-link:hover {
+            color: #E2E6EC;
+            background: rgba(44, 54, 68, 0.95);
+        }
+
+        @media (max-width: 768px) {
+            .rules-hero {
+                padding: 90px 20px 45px;
+            }
+
+            .rules-hero h1 {
+                font-size: 24px;
+            }
+
+            .rules-page {
+                padding: 30px 16px 50px;
+            }
+
+            .rules-section {
+                padding: 20px 16px;
+            }
+
+            .rules-section-title {
+                font-size: 13.5px;
+            }
+
+            .rule-item {
+                padding: 10px 12px;
+            }
+
+            .rule-text {
+                font-size: 12.5px;
+            }
+
+            .rules-support-banner {
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Minecraft Background -->
+    <div class="minecraft-bg">
+        <div class="clouds"></div>
+        <div class="stars"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand" title="CraftZ">
+                <img src="craftzlogo.png" alt="CraftZ" class="nav-logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#join">Beitreten</a></li>
+                <li><a href="index.html#team">Team</a></li>
+                <li><a href="index.html#stats">Stats</a></li>
+                <li><a href="https://discord.gg/JNyefdvkBc" class="discord-btn" target="_blank" rel="noopener noreferrer">
+                    <img src="icons/discordicon.png" alt="Discord" class="discord-icon-small">
+                    Discord beitreten
+                </a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Rules Hero -->
+    <div class="rules-hero">
+        <span class="rules-hero-badge">Offizielles Regelwerk</span>
+        <h1>Server-Regeln</h1>
+        <p class="rules-hero-sub">Faires Miteinander auf CraftZ SMP • Gültig für Minecraft & Discord</p>
+    </div>
+
+    <!-- Rules Content -->
+    <main class="rules-page">
+
+        <!-- Intro Card -->
+        <div class="rules-intro-card">
+            <h2>Grundsatz & Fairness</h2>
+            <p>
+                Auf <strong>CraftZ SMP</strong> steht der gemeinsame Spielspaß, faires Survival und eine freundliche Community an oberster Stelle. 
+                Unser Regelwerk ist bewusst klar und überschaubar formuliert. Mit dem Betreten unseres Servers oder Discords akzeptierst du diese Regeln automatisch. 
+                Unwissenheit schützt nicht vor einer Strafe.
+            </p>
+        </div>
+
+        <!-- § 1 Community -->
+        <div class="rules-section">
+            <div class="rules-header-row">
+                <h2 class="rules-section-title">§ 1 • Respekt & Chat-Verhalten</h2>
+                <span class="rules-tag tag-important">Wichtig</span>
+            </div>
+            <ul class="rules-list">
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Freundlicher Umgang:</strong> Behandle jeden Spieler mit Respekt. Beleidigungen, Provokationen, toxisches Verhalten, Diskriminierung, Rassismus, Drohungen und Belästigung sind strengstens verboten und führen zum sofortigen Bann.
+                    </p>
+                </li>
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Kein Spam & Caps-Lock:</strong> Wiederholtes Senden gleicher Nachrichten, sinnlose Zeichenfolgen sowie übermäßige Großschreibung im öffentlichen Chat sind untersagt.
+                    </p>
+                </li>
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Keine Fremdwerbung:</strong> Das Werben für fremde Minecraft-Server, Discord-Server, YouTube-Kanäle oder kommerzielle Angebote ist im Spiel und auf unserem Discord verboten.
+                    </p>
+                </li>
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Angemessene Namen & Skins:</strong> Anstößige, rassistische oder irreführende Spielernamen sowie unpassende Skins sind nicht gestattet.
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- § 2 Cheating & Client -->
+        <div class="rules-section">
+            <div class="rules-header-row">
+                <h2 class="rules-section-title">§ 2 • Cheating, Mods & Performance</h2>
+                <span class="rules-tag tag-fairplay">Fairplay</span>
+            </div>
+            <ul class="rules-list">
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong class="highlight-red">Hacks & Modifizierte Clients verboten:</strong> Jegliche Hacked Clients, X-Ray (Texturen oder Packs), Auto-Clicker, Fly-, Speed-, Kill-Aura- oder Scaffolding-Tools sind ausnahmslos verboten.
+                    </p>
+                </li>
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Erlaubte Modifikationen:</strong> Standard-Texturen-Packs, Shader und reine Performance-Optimierungen sind erlaubt, solange sie keinen unfairen Spielvorteil verschaffen.
+                    </p>
+                </li>
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Server-Schutz & Lag-Prävention:</strong> Das bewusste Erzeugen von Server-Lags (z.B. endlose Redstone-Clocks ohne Aus-Schalter, riesige unkontrollierte Farmen oder extreme Entity-Massen auf kleinem Raum) ist untersagt.
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- § 3 Wirtschaft & Handel -->
+        <div class="rules-section">
+            <div class="rules-header-row">
+                <h2 class="rules-section-title">§ 3 • Wirtschaft, Handel & Bugs</h2>
+                <span class="rules-tag tag-economy">Wirtschaft</span>
+            </div>
+            <ul class="rules-list">
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong class="highlight-red">Kein Bugusing & Duplizieren:</strong> Das Ausnutzen von Spielfehlern, Item-Duplikation (Duping) oder Glitches im Shop- und Questsystem ist streng verboten. Entdeckte Fehler müssen umgehend dem Team gemeldet werden.
+                    </p>
+                </li>
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong class="highlight-gold">Ehrlicher Handel:</strong> Betrug beim Spieler-Handel (Scamming) ist verboten. Abgesprochene Tauschgeschäfte sind bindend. Teleport-Fallen (/tpahere) sind untersagt.
+                    </p>
+                </li>
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Kein Echtgeld-Handel:</strong> Das Kaufen oder Verkaufen von Ingame-Geld, Items oder Dienstleistungen gegen echtes Geld oder Gutscheine ist verboten.
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- § 4 Team & Strafen -->
+        <div class="rules-section">
+            <div class="rules-header-row">
+                <h2 class="rules-section-title">§ 4 • Team-Anweisungen & Sanktionen</h2>
+                <span class="rules-tag tag-important">Sanktionen</span>
+            </div>
+            <ul class="rules-list">
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Team-Entscheidungen:</strong> Den Anweisungen von Teammitgliedern (Owner Mishu7510, Admin PichPich1) ist stets Folge zu leisten.
+                    </p>
+                </li>
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Bannumgehung:</strong> Das Umgehen von Strafen durch Zweit-Accounts (Alt-Accounts) oder VPN-Wechsel führt zum sofortigen permanenten Bann aller zugehörigen Accounts.
+                    </p>
+                </li>
+                <li class="rule-item">
+                    <span class="rule-bullet">→</span>
+                    <p class="rule-text">
+                        <strong>Strafmaß:</strong> Je nach Schwere des Vergehens reicht das Strafmaß von Verwarnungen über temporäre Mutes/Banne bis hin zum dauerhaften Hausverbot.
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Discord Support Banner -->
+        <div class="rules-support-banner">
+            <div class="rules-support-content">
+                <h3>Fragen oder Regelverstoß melden?</h3>
+                <p>
+                    Unser Team hilft dir gerne weiter. Bei Streitigkeiten oder Spieler-Meldungen erstelle bitte ein Ticket auf unserem Discord-Server.
+                </p>
+            </div>
+            <a href="https://discord.gg/JNyefdvkBc" class="discord-btn" target="_blank" rel="noopener noreferrer">
+                <img src="icons/discordicon.png" alt="Discord" class="discord-icon-small">
+                Support auf Discord
+            </a>
+        </div>
+
+        <!-- Back Link -->
+        <div class="back-link-wrap">
+            <a href="index.html" class="back-link">← Zurück zur Startseite</a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="craftzlogo.png" alt="CraftZ" class="footer-logo-img">
+                    </div>
+                    <p class="footer-tagline">
+                        Premium Minecraft Bedrock Server<br>
+                        gemacht mit liebe von CraftZ Team
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Server</h4>
+                        <ul>
+                            <li><a href="index.html#features">Features</a></li>
+                            <li><a href="index.html#join">Beitreten</a></li>
+                            <li><a href="index.html#team">Team</a></li>
+                            <li><a href="index.html#stats">Stats</a></li>
+                            <li><a href="regeln.html">Regeln</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Community</h4>
+                        <ul>
+                            <li><a href="https://discord.gg/JNyefdvkBc" target="_blank" rel="noopener noreferrer">Discord</a></li>
+                            <li><a href="https://discord.gg/JNyefdvkBc" target="_blank" rel="noopener noreferrer">Support</a></li>
+                            <li><a href="regeln.html">Regeln</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="impressum.html">Impressum</a></li>
+                            <li><a href="datenschutz.html">Datenschutz</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CraftZ Server • Nicht mit Mojang verbunden • <a href="regeln.html">Regeln</a> • <a href="impressum.html">Impressum</a> • <a href="datenschutz.html">Datenschutz</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
