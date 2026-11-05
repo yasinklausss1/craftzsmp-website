@@ -132,6 +132,11 @@ module.exports = async function handler(req, res) {
 
         const redisConfig = getRedisConfig();
 
+        // Safe inspection of environment variable names (keys only, NO values/secrets)
+        const relevantKeys = Object.keys(process.env).filter(k => 
+            k.includes('REDIS') || k.includes('UPSTASH') || k.includes('KV') || k.includes('REST') || k.includes('STORAGE')
+        );
+
         res.status(200).json({
             success: true,
             online: isOnline,
@@ -144,6 +149,7 @@ module.exports = async function handler(req, res) {
             questsCompleted: mergedStats.questsCompleted,
             homesSet: mergedStats.homesSet,
             redisConfigured: Boolean(redisConfig.url && redisConfig.token),
+            detectedEnvKeys: relevantKeys,
             lastUpdated: mergedStats.lastUpdated || Date.now()
         });
         return;
