@@ -1,0 +1,24 @@
+{
+  "name": "craftz-website",
+  "version": "1.0.0",
+  "description": "Offizielle Webpräsenz für den **CraftZ SMP** Minecraft Bedrock Server (`craftzsmp.xyz`).",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yasinklausss1/craftzsmp-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/yasinklausss1/craftzsmp-website/issues"
+  },
+  "homepage": "https://github.com/yasinklausss1/craftzsmp-website#readme",
+  "dependencies": {
+    "ioredis": "^6.0.0"
+  }
+}

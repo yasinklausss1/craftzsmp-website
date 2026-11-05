@@ -1,5 +1,6 @@
 // Vercel Serverless Function: /api/stats
 // Handles GET (public stats for craftzsmp.xyz) and POST (secure webhook from Minecraft BDS)
+const Redis = require('ioredis');
 
 const DEFAULT_STATS = {
     registeredPlayers: 32,
@@ -10,74 +11,53 @@ const DEFAULT_STATS = {
 
 const SYNC_SECRET = process.env.STATS_SYNC_SECRET || "craftz_secret_sync_2026";
 
-function getRedisConfig() {
-    let url = process.env.KV_REST_API_URL || 
-              process.env.UPSTASH_REDIS_REST_URL || 
-              process.env.UPSTASH_REST_API_URL || 
-              process.env.REDIS_REST_URL;
+let redisClient = null;
 
-    let token = process.env.KV_REST_API_TOKEN || 
-                process.env.UPSTASH_REDIS_REST_TOKEN || 
-                process.env.UPSTASH_REST_API_TOKEN || 
-                process.env.REDIS_REST_TOKEN;
-
-    if ((!url || !token) && process.env.REDIS_URL) {
+function getRedis() {
+    if (!redisClient && process.env.REDIS_URL) {
         try {
-            const parsed = new URL(process.env.REDIS_URL);
-            if (parsed.hostname && parsed.password) {
-                url = `https://${parsed.hostname}`;
-                token = decodeURIComponent(parsed.password);
-            }
+            redisClient = new Redis(process.env.REDIS_URL, {
+                connectTimeout: 4000,
+                maxRetriesPerRequest: 1,
+                lazyConnect: true
+            });
         } catch (e) {
-            console.error("Failed to parse REDIS_URL:", e);
+            console.error("Redis init error:", e);
         }
     }
-
-    return { url, token };
+    return redisClient;
 }
 
 async function getFromRedis() {
-    const { url, token } = getRedisConfig();
-    if (!url || !token) return null;
+    const client = getRedis();
+    if (!client) return null;
 
     try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(["GET", "craftz_stats"])
-        });
-        if (!response.ok) return null;
-        const data = await response.json();
-        if (data && data.result) {
-            return typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
+        if (client.status === 'wait') {
+            await client.connect();
+        }
+        const data = await client.get('craftz_stats');
+        if (data) {
+            return JSON.parse(data);
         }
     } catch (err) {
-        console.error("Redis fetch error:", err);
+        console.error("Redis get error:", err);
     }
     return null;
 }
 
 async function saveToRedis(statsData) {
-    const { url, token } = getRedisConfig();
-    if (!url || !token) return { ok: false, error: "Missing url or token" };
+    const client = getRedis();
+    if (!client) return { ok: false, error: "No Redis client configured" };
 
     try {
-        const payloadString = JSON.stringify(statsData);
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(["SET", "craftz_stats", payloadString])
-        });
-        const text = await response.text();
-        return { ok: response.ok, status: response.status, targetUrl: url, raw: text };
+        if (client.status === 'wait') {
+            await client.connect();
+        }
+        const res = await client.set('craftz_stats', JSON.stringify(statsData));
+        return { ok: res === 'OK', result: res };
     } catch (err) {
-        return { ok: false, targetUrl: url, error: err.message, cause: err.cause ? err.cause.message : null };
+        return { ok: false, error: err.message };
     }
 }
 
@@ -129,7 +109,7 @@ module.exports = async function handler(req, res) {
         };
 
         const saved = await saveToRedis(newStats);
-        res.status(200).json({ success: true, saved: saved.ok, debug: saved, stats: newStats });
+        res.status(200).json({ success: true, saved: saved.ok, result: saved.result, stats: newStats });
         return;
     }
 
@@ -148,13 +128,6 @@ module.exports = async function handler(req, res) {
         const onlinePlayers = pingData && pingData.players ? (pingData.players.online || 0) : 0;
         const maxPlayers = pingData && pingData.players ? (pingData.players.max || 50) : 50;
 
-        const redisConfig = getRedisConfig();
-
-        // Safe inspection of environment variable names (keys only, NO values/secrets)
-        const relevantKeys = Object.keys(process.env).filter(k => 
-            k.includes('REDIS') || k.includes('UPSTASH') || k.includes('KV') || k.includes('REST') || k.includes('STORAGE')
-        );
-
         res.status(200).json({
             success: true,
             online: isOnline,
@@ -166,8 +139,7 @@ module.exports = async function handler(req, res) {
             moneyCirculation: mergedStats.moneyCirculation,
             questsCompleted: mergedStats.questsCompleted,
             homesSet: mergedStats.homesSet,
-            redisConfigured: Boolean(redisConfig.url && redisConfig.token),
-            detectedEnvKeys: relevantKeys,
+            redisConfigured: Boolean(process.env.REDIS_URL),
             lastUpdated: mergedStats.lastUpdated || Date.now()
         });
         return;
