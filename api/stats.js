@@ -75,9 +75,9 @@ async function saveToRedis(statsData) {
             body: JSON.stringify(["SET", "craftz_stats", payloadString])
         });
         const text = await response.text();
-        return { ok: response.ok, status: response.status, raw: text };
+        return { ok: response.ok, status: response.status, targetUrl: url, raw: text };
     } catch (err) {
-        return { ok: false, error: err.message };
+        return { ok: false, targetUrl: url, error: err.message, cause: err.cause ? err.cause.message : null };
     }
 }
 
