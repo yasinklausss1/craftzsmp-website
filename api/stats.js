@@ -41,8 +41,13 @@ async function getFromRedis() {
     if (!url || !token) return null;
 
     try {
-        const response = await fetch(`${url}/get/craftz_stats`, {
-            headers: { Authorization: `Bearer ${token}` }
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(["GET", "craftz_stats"])
         });
         if (!response.ok) return null;
         const data = await response.json();
@@ -60,19 +65,23 @@ async function saveToRedis(statsData) {
     if (!url || !token) return false;
 
     try {
-        const response = await fetch(`${url}/set/craftz_stats`, {
+        const payloadString = JSON.stringify(statsData);
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(statsData)
+            body: JSON.stringify(["SET", "craftz_stats", payloadString])
         });
-        return response.ok;
+        if (response.ok) {
+            const data = await response.json();
+            return Boolean(data && data.result === "OK");
+        }
     } catch (err) {
         console.error("Redis save error:", err);
-        return false;
     }
+    return false;
 }
 
 async function fetchLivePing() {
