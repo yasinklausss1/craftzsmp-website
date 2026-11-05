@@ -1,0 +1,1597 @@
+/* ==========================================================================
+   CRAFTZ SMP - MOODY MINECRAFT NIGHT THEME
+   Farb- & Stilkonzept basierend auf dem Server-Banner
+   ========================================================================== */
+
+/* Lokale Schriftart als zuverlässiger Block-Fallback */
+@font-face {
+    font-family: 'Mojangles';
+    src: url('mojangles.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   1. DESIGN-TOKENS & FARBVARIABLEN
+   ========================================================================== */
+:root {
+    /* Grundstimmung: Moody Minecraft Night */
+    --night-sky-base: #1E2530;
+    --night-sky-slate: #2B3542;
+    --night-slate-deep: #161B22;
+    --shadow-moss: #212918;
+    --border-dark: #0D0D0D;
+
+    /* Primäre Akzentfarbe: Karmesin- bis Blutrot (3D Block Style) */
+    --crimson-light: #C2272D;
+    --blood-red: #681216;
+    --wine-dark: #290709;
+    --red-gradient: linear-gradient(180deg, #C2272D 0%, #681216 100%);
+    --red-gradient-hover: linear-gradient(180deg, #D4383E 0%, #7D171C 100%);
+
+    /* Sekundäre Akzente: Fackellicht & Diamant */
+    --torch-gold: #D4A359;
+    --torch-amber: #E8C584;
+    --torch-glow: rgba(212, 163, 89, 0.4);
+    --torch-glow-strong: rgba(232, 197, 132, 0.6);
+    --diamond-cyan: #38A3C7;
+    --diamond-cyan-hover: #48BCE3;
+    --diamond-glow: rgba(56, 163, 199, 0.4);
+
+    /* Text & neutrale Töne */
+    --text-primary: #E2E6EC;
+    --text-muted: #8B98A5;
+    --text-dark: #0D0D0D;
+    --text-heading: #FFFFFF;
+
+    /* Schriften */
+    --font-heading: 'Silkscreen', 'Mojangles', monospace;
+    --font-body: 'Mojangles', 'Silkscreen', monospace;
+
+    /* Harte 3D-Block-Schatten (KEIN Blur, Minecraft 3D-Style) */
+    --shadow-3d-red: 3px 3px 0px var(--wine-dark), 5px 5px 0px var(--border-dark);
+    --shadow-3d-red-lg: 4px 4px 0px var(--wine-dark), 6px 6px 0px var(--border-dark);
+    --shadow-3d-dark: 4px 4px 0px var(--border-dark);
+    --shadow-3d-dark-lg: 6px 6px 0px var(--border-dark);
+    --shadow-3d-pressed: 1px 1px 0px var(--wine-dark), 2px 2px 0px var(--border-dark);
+
+    /* Blocky Ecken */
+    --radius-block: 2px;
+}
+
+/* ==========================================================================
+   2. RESET & BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    background: var(--night-sky-base);
+    color: var(--text-primary);
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Auswahl-Farbe im stylischen Nachtrot */
+::selection {
+    background: var(--crimson-light);
+    color: #FFFFFF;
+}
+
+/* ==========================================================================
+   3. ATMOSPHÄRISCHER HINTERGRUND (Moody Night Sky)
+   ========================================================================== */
+.minecraft-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(180deg, #161B22 0%, #1E2530 45%, #2B3542 100%);
+}
+
+.minecraft-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('map2d.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(1.5px) brightness(0.38) saturate(0.85);
+    transform: scale(1.02);
+}
+
+.minecraft-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at 50% 20%,
+        rgba(43, 53, 66, 0.25) 0%,
+        rgba(30, 37, 48, 0.55) 60%,
+        rgba(22, 27, 34, 0.75) 100%
+    );
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(1.5px 1.5px at 20% 30%, #E8C584, transparent),
+        radial-gradient(2px 2px at 60% 70%, #E2E6EC, transparent),
+        radial-gradient(1px 1px at 50% 50%, #E8C584, transparent),
+        radial-gradient(1.5px 1.5px at 80% 15%, #E2E6EC, transparent),
+        radial-gradient(2px 2px at 90% 60%, #E8C584, transparent),
+        radial-gradient(1px 1px at 35% 85%, #E2E6EC, transparent);
+    background-size: 260px 260px;
+    animation: starGlow 6s ease-in-out infinite;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+@keyframes starGlow {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.7; }
+}
+
+.clouds {
+    position: absolute;
+    width: 100%;
+    height: 320px;
+    top: 40px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="50"><rect fill="%232b3542" opacity="0.3" width="90" height="24" x="10" y="10"/><rect fill="%232b3542" opacity="0.25" width="50" height="18" x="25" y="4"/><rect fill="%232b3542" opacity="0.25" width="40" height="18" x="60" y="4"/></svg>');
+    background-size: 380px 120px;
+    animation: cloudDrift 50s linear infinite;
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+@keyframes cloudDrift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-380px); }
+}
+
+/* ==========================================================================
+   4. NAVIGATION (Schiefergrau & Blutrot-Akzent)
+   ========================================================================== */
+.nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(22, 27, 34, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--border-dark);
+    box-shadow: 0 4px 0 var(--border-dark);
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-logo {
+    height: 54px;
+    width: auto;
+    max-width: 90px;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 0 var(--border-dark));
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.nav-brand:hover .nav-logo {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px var(--torch-glow));
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    padding: 8px 14px;
+    border-radius: var(--radius-block);
+    border: 2px solid transparent;
+    transition: all 0.15s ease;
+}
+
+.nav-links a:hover {
+    color: var(--torch-amber);
+    background: rgba(212, 163, 89, 0.08);
+    border-color: var(--border-dark);
+    box-shadow: 2px 2px 0 var(--border-dark);
+}
+
+/* Discord CTA in der Navbar - Blutrot 3D-Block */
+.discord-btn {
+    background: var(--red-gradient) !important;
+    color: #FFFFFF !important;
+    border: 2px solid var(--border-dark) !important;
+    box-shadow: var(--shadow-3d-red) !important;
+    padding: 9px 18px !important;
+    border-radius: var(--radius-block) !important;
+    font-family: var(--font-heading) !important;
+    font-size: 12px !important;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: all 0.1s ease;
+}
+
+.discord-btn:hover {
+    background: var(--red-gradient-hover) !important;
+    color: #FFFFFF !important;
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-3d-pressed) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.discord-icon-small {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+    image-rendering: auto;
+}
+
+.nav-toggle {
+    display: none;
+    background: var(--night-slate-deep);
+    border: 2px solid var(--border-dark);
+    box-shadow: 3px 3px 0 var(--border-dark);
+    color: var(--text-primary);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: var(--radius-block);
+}
+
+/* ==========================================================================
+   5. HERO-SECTION (Spawn & Moody Night Theme)
+   ========================================================================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 85px 30px 50px;
+    position: relative;
+}
+
+.hero-spawn-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.spawn-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: brightness(0.55) contrast(1.05);
+    position: relative;
+    z-index: 1;
+}
+
+/* Animated Steve GIF - hinter Blur aber vor spawn.jfif */
+.steve-gif-container {
+    position: absolute;
+    bottom: 0;
+    right: 8%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.steve-gif {
+    height: 220px;
+    width: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    display: block;
+    animation: steveIdle 3s ease-in-out infinite;
+    filter: brightness(0.85) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
+}
+
+@keyframes steveIdle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.hero-spawn-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    background: linear-gradient(180deg,
+        rgba(30, 37, 48, 0.35) 0%,
+        rgba(22, 27, 34, 0.25) 50%,
+        rgba(22, 27, 34, 0.75) 100%);
+    pointer-events: none;
+}
+
+/* Tagline oberhalb von "Willkommen zu CraftZ SMP!" */
+.hero-top {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.tagline {
+    font-size: 19px;
+    color: var(--text-primary);
+    display: inline-block;
+    padding: 8px 22px;
+    background: rgba(22, 27, 34, 0.8);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-3d-dark);
+    border-radius: var(--radius-block);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    letter-spacing: 0.4px;
+}
+
+.tagline .highlight {
+    color: var(--torch-amber);
+    font-weight: 600;
+}
+
+/* Inhaltsbereich unterhalb des Spawn-Titels */
+.hero-content {
+    text-align: center;
+    z-index: 10;
+    max-width: 900px;
+    margin-top: clamp(140px, calc(18vw - 80px), 380px);
+}
+
+/* ==========================================================================
+   6. SERVER-IP CTA-BUTTON (Blutrot / Karmesinrot 3D-Block-Stil)
+   ========================================================================== */
+.server-ip-container {
+    margin-bottom: 35px;
+}
+
+.grass-block-border {
+    padding: 4px;
+    background: var(--red-gradient);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-3d-red-lg);
+    border-radius: var(--radius-block);
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.12s ease;
+}
+
+.grass-block-border:hover {
+    background: var(--red-gradient-hover);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--wine-dark), 3px 3px 0px var(--border-dark), 0 0 16px var(--torch-glow);
+}
+
+.grass-block-border:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 transparent;
+}
+
+.grass-block-border.copied {
+    background: linear-gradient(180deg, #50C878 0%, #2E7D47 100%) !important;
+    box-shadow: 4px 4px 0px #184A28, 6px 6px 0px var(--border-dark) !important;
+}
+
+.ip-box {
+    background: rgba(13, 13, 13, 0.75);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: var(--radius-block);
+    user-select: none;
+}
+
+.ip-label {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    color: var(--torch-amber);
+    text-shadow: 2px 2px 0 var(--border-dark);
+}
+
+.ip-address {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    color: #FFFFFF;
+    text-shadow: 2px 2px 0 var(--wine-dark), 3px 3px 0 var(--border-dark);
+    letter-spacing: 1px;
+    transition: color 0.15s ease;
+}
+
+.grass-block-border:hover .ip-address {
+    color: var(--torch-amber);
+}
+
+.ip-address.copied {
+    color: #FFFFFF !important;
+    text-shadow: 2px 2px 0 #184A28 !important;
+}
+
+.ip-click-hint {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--diamond-cyan);
+    margin-left: 4px;
+    opacity: 0.9;
+    transition: all 0.15s ease;
+}
+
+.grass-block-border:hover .ip-click-hint {
+    color: var(--torch-gold);
+    opacity: 1;
+}
+
+/* Quick Stats Pills */
+.quick-stats {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.stat-pill {
+    background: rgba(22, 27, 34, 0.9);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-3d-dark);
+    border-radius: var(--radius-block);
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.15s ease;
+}
+
+.stat-pill:hover {
+    border-color: var(--torch-gold);
+    box-shadow: var(--shadow-3d-dark), 0 0 12px var(--torch-glow);
+    transform: translateY(-2px);
+}
+
+.stat-icon-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(2px 2px 0 var(--border-dark));
+}
+
+.stat-text {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.stat-text strong {
+    font-family: var(--font-heading);
+    color: var(--torch-amber);
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   7. SEKTIONS-ÜBERSCHRIFTEN (3D-Minecraft Block-Stil Blutrot)
+   ========================================================================== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 30px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    color: var(--crimson-light);
+    text-shadow:
+        2px 2px 0px var(--blood-red),
+        4px 4px 0px var(--wine-dark),
+        6px 6px 0px var(--border-dark);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.title-icon {
+    font-size: 26px;
+    vertical-align: middle;
+}
+
+.title-icon-img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    vertical-align: middle;
+    filter: drop-shadow(2px 2px 0 var(--border-dark));
+    display: inline-block;
+    margin: 0 6px;
+}
+
+.section-subtitle {
+    font-size: 16px;
+    color: var(--torch-gold);
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   8. FEATURES-SECTION (Schatten-Moosgrün & Schiefergrau)
+   ========================================================================== */
+.features-section {
+    padding: 60px 0;
+    position: relative;
+    border-top: 2px solid var(--border-dark);
+    border-bottom: 2px solid var(--border-dark);
+    background: rgba(22, 27, 34, 0.25);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 30px;
+}
+
+.feature-box {
+    background: var(--night-slate-deep);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-3d-dark);
+    border-radius: var(--radius-block);
+    padding: 35px 28px;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+/* Abwechselnd Moosgrün & Schiefergrau für natürliche Erdtöne */
+.feature-box:nth-child(even) {
+    background: var(--shadow-moss);
+}
+
+.feature-box:hover {
+    border-color: var(--torch-gold);
+    box-shadow: var(--shadow-3d-dark), 0 0 18px var(--torch-glow);
+    transform: translateY(-3px);
+}
+
+.feature-icon-img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    margin-bottom: 18px;
+    display: block;
+    filter: drop-shadow(3px 3px 0 var(--border-dark));
+}
+
+.feature-title {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    color: var(--text-heading);
+    text-shadow: 2px 2px 0 var(--border-dark);
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+}
+
+.feature-box:hover .feature-title {
+    color: var(--torch-amber);
+}
+
+.feature-description p {
+    color: var(--text-primary);
+    font-size: 15px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.feature-list {
+    list-style: none;
+}
+
+.feature-list li {
+    font-size: 14px;
+    color: var(--text-muted);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(13, 13, 13, 0.6);
+}
+
+.feature-list li:last-child {
+    border-bottom: none;
+}
+
+.feature-list strong {
+    color: var(--text-primary);
+}
+
+.money {
+    color: var(--torch-amber);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   8b. SO TRITTST DU BEI (Anleitung & Bedrock Verbindungsdaten)
+   ========================================================================== */
+.join-section {
+    padding: 70px 0;
+    position: relative;
+    background: linear-gradient(180deg, rgba(33, 41, 24, 0.4) 0%, rgba(22, 27, 34, 0.8) 100%);
+    border-top: 2px solid var(--border-dark);
+    border-bottom: 2px solid var(--border-dark);
+}
+
+/* 3-Schritte-Grid */
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 40px;
+}
+
+.step-card {
+    background: var(--night-slate-deep);
+    border: 2px solid var(--border-dark);
+    border-radius: var(--radius-block);
+    box-shadow: var(--shadow-3d-dark);
+    padding: 22px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.step-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--border-dark);
+    border-color: var(--torch-gold);
+}
+
+.step-badge {
+    width: 38px;
+    height: 38px;
+    background: var(--red-gradient);
+    color: #FFFFFF;
+    border: 2px solid var(--border-dark);
+    box-shadow: 2px 2px 0px var(--wine-dark);
+    border-radius: var(--radius-block);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+    text-shadow: 1px 1px 0px var(--wine-dark);
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-title {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    color: var(--text-heading);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.step-desc {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--text-primary);
+    line-height: 1.55;
+}
+
+.step-desc strong {
+    color: var(--torch-amber);
+}
+
+/* Showcase: 2-Spalten Container */
+.join-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+    align-items: stretch;
+}
+
+.join-details-card,
+.join-preview-card {
+    background: var(--night-slate-deep);
+    border: 2px solid var(--border-dark);
+    border-radius: var(--radius-block);
+    box-shadow: var(--shadow-3d-dark-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Karten-Header */
+.card-header,
+.preview-header {
+    background: #0F1318;
+    padding: 12px 18px;
+    border-bottom: 2px solid var(--border-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.card-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.card-dot {
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--border-dark);
+    border-radius: 1px;
+    display: inline-block;
+}
+
+.card-dot.red { background: var(--crimson-light); }
+.card-dot.gold { background: var(--torch-gold); }
+.card-dot.cyan { background: var(--diamond-cyan); }
+
+.card-header-title {
+    font-family: var(--font-heading);
+    font-size: 11.5px;
+    color: var(--torch-amber);
+    letter-spacing: 0.5px;
+    margin-right: auto;
+    margin-left: 6px;
+}
+
+.preview-header {
+    justify-content: flex-start;
+}
+
+.preview-icon {
+    font-size: 14px;
+}
+
+.preview-title {
+    font-family: var(--font-heading);
+    font-size: 11.5px;
+    color: var(--text-heading);
+    letter-spacing: 0.5px;
+}
+
+.preview-status {
+    margin-left: auto;
+    font-family: var(--font-heading);
+    font-size: 9.5px;
+    padding: 3px 8px;
+    background: rgba(56, 163, 199, 0.2);
+    color: var(--diamond-cyan);
+    border: 1px solid var(--diamond-cyan);
+    border-radius: var(--radius-block);
+    letter-spacing: 0.5px;
+}
+
+/* Interaktive Server-Daten */
+.server-fields {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.server-field-item {
+    background: rgba(13, 13, 13, 0.6);
+    border: 2px solid var(--border-dark);
+    border-radius: var(--radius-block);
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.server-field-item:hover {
+    border-color: var(--torch-gold);
+    background: rgba(33, 41, 24, 0.7);
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0px var(--border-dark);
+}
+
+.server-field-item.highlight-cyan:hover {
+    border-color: var(--diamond-cyan);
+}
+
+.server-field-item.highlight-gold:hover {
+    border-color: var(--torch-amber);
+}
+
+.field-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.field-label {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.field-hint {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--torch-gold);
+    opacity: 0.75;
+}
+
+.server-field-item:hover .field-hint {
+    opacity: 1;
+    color: var(--torch-amber);
+}
+
+.field-value-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #090C0F;
+    border: 1px solid #1E2530;
+    padding: 10px 12px;
+    border-radius: 1px;
+    gap: 10px;
+}
+
+.field-val {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    color: var(--text-heading);
+    letter-spacing: 0.5px;
+    word-break: break-all;
+}
+
+.field-val.cyan-glow {
+    color: var(--diamond-cyan);
+    text-shadow: 0 0 10px var(--diamond-glow);
+}
+
+.field-val.gold-glow {
+    color: var(--torch-amber);
+    text-shadow: 0 0 10px var(--torch-glow);
+    font-size: 17px;
+}
+
+.important-tag {
+    background: var(--red-gradient);
+    color: #FFFFFF;
+    padding: 2px 6px;
+    font-size: 9px;
+    border: 1px solid var(--border-dark);
+    box-shadow: 1px 1px 0px var(--wine-dark);
+    margin-left: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+}
+
+.copy-badge {
+    font-family: var(--font-heading);
+    font-size: 10px;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 4px 10px;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-block);
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    box-shadow: 1px 1px 0px var(--border-dark);
+}
+
+.server-field-item:hover .copy-badge {
+    background: var(--torch-gold);
+    color: var(--border-dark);
+    font-weight: 700;
+}
+
+/* Wichtiger Hinweis Box */
+.join-note-box {
+    margin: 0 20px 18px;
+    background: rgba(212, 163, 89, 0.08);
+    border-left: 4px solid var(--torch-gold);
+    border-top: 1px solid rgba(212, 163, 89, 0.25);
+    border-right: 1px solid rgba(212, 163, 89, 0.25);
+    border-bottom: 1px solid rgba(212, 163, 89, 0.25);
+    border-radius: var(--radius-block);
+    padding: 12px 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.note-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    line-height: 1.2;
+}
+
+.note-text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.note-text strong {
+    color: var(--torch-amber);
+}
+
+.note-text code {
+    background: rgba(13, 13, 13, 0.7);
+    color: var(--diamond-cyan);
+    padding: 2px 6px;
+    border: 1px solid var(--border-dark);
+    border-radius: 2px;
+    font-family: var(--font-heading);
+    font-size: 11px;
+}
+
+/* Plattformen */
+.platform-support {
+    padding: 0 20px 20px;
+    margin-top: auto;
+}
+
+.platform-title {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.platform-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.platform-pill {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--text-primary);
+    background: rgba(13, 13, 13, 0.5);
+    border: 1px solid var(--border-dark);
+    padding: 5px 10px;
+    border-radius: var(--radius-block);
+    box-shadow: 1px 1px 0px var(--border-dark);
+}
+
+/* Screenshot Preview Rechts */
+.preview-image-wrap {
+    padding: 20px;
+    background: #0E1217;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.join-guide-img {
+    width: 100%;
+    height: auto;
+    max-height: 360px;
+    object-fit: contain;
+    display: block;
+    border: 2px solid var(--border-dark);
+    border-radius: var(--radius-block);
+    box-shadow: 4px 4px 0px var(--border-dark);
+    background: #1e1e1e;
+    transition: transform 0.2s ease;
+}
+
+.join-preview-card:hover .join-guide-img {
+    transform: scale(1.01);
+}
+
+.preview-caption {
+    padding: 14px 18px;
+    background: #0F1318;
+    border-top: 2px solid var(--border-dark);
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.caption-icon {
+    color: var(--torch-gold);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   9. TEAM-SECTION (Ränge mit Karmesin- & Diamant-Akzent)
+   ========================================================================== */
+.team-section {
+    padding: 60px 0;
+    position: relative;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 30px;
+}
+
+.team-card {
+    background: var(--night-slate-deep);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-3d-dark);
+    border-radius: var(--radius-block);
+    padding: 30px;
+    transition: all 0.15s ease;
+}
+
+.team-card:hover {
+    border-color: var(--torch-gold);
+    box-shadow: var(--shadow-3d-dark), 0 0 18px var(--torch-glow);
+    transform: translateY(-3px);
+}
+
+.minecraft-player-card {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+.player-head {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--border-dark);
+    box-shadow: 3px 3px 0 var(--border-dark);
+    border-radius: var(--radius-block);
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--border-dark);
+}
+
+.player-head img {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    display: block;
+}
+
+.player-info {
+    flex: 1;
+}
+
+.player-name {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    color: var(--text-heading);
+    text-shadow: 2px 2px 0 var(--border-dark);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+/* Ränge */
+.player-rank {
+    display: inline-block;
+    padding: 5px 12px;
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--border-dark);
+    border-radius: var(--radius-block);
+    margin-bottom: 14px;
+}
+
+/* Gründer: Karmesinrot-Verlauf */
+.player-rank.founder {
+    background: var(--red-gradient);
+    color: #FFFFFF;
+    box-shadow: 2px 2px 0px var(--wine-dark);
+}
+
+/* Admin: Diamant-Cyan */
+.player-rank.admin {
+    background: var(--diamond-cyan);
+    color: var(--border-dark);
+    font-weight: 700;
+    box-shadow: 2px 2px 0px var(--border-dark);
+}
+
+.player-bio {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.player-stats {
+    display: flex;
+    gap: 20px;
+    border-top: 1px solid rgba(13, 13, 13, 0.8);
+    padding-top: 14px;
+}
+
+.stat-item {
+    font-size: 13px;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    margin-right: 6px;
+}
+
+.stat-value {
+    color: var(--torch-amber);
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   10. STATS-SECTION (Tiefes Schatten-Moosgrün & Fackellicht)
+   ========================================================================== */
+.stats-section {
+    padding: 60px 0;
+    position: relative;
+    border-top: 2px solid var(--border-dark);
+    border-bottom: 2px solid var(--border-dark);
+    background: rgba(30, 37, 48, 0.4);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.stat-block {
+    background: var(--shadow-moss);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-3d-dark);
+    border-radius: var(--radius-block);
+    padding: 35px 25px;
+    text-align: center;
+    transition: all 0.15s ease;
+}
+
+.stat-block:hover {
+    border-color: var(--torch-gold);
+    box-shadow: var(--shadow-3d-dark), 0 0 16px var(--torch-glow);
+    transform: translateY(-3px);
+}
+
+.stat-block .stat-icon-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    margin: 0 auto 15px;
+    display: block;
+    filter: drop-shadow(3px 3px 0 var(--border-dark));
+}
+
+.stat-number {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    color: var(--torch-amber);
+    text-shadow: 2px 2px 0 var(--border-dark);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.stat-block .stat-label {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   11. DISCORD-SECTION (Blutrot-Banner & 3D CTA)
+   ========================================================================== */
+.discord-section {
+    padding: 90px 30px;
+    position: relative;
+}
+
+.discord-banner {
+    max-width: 850px;
+    margin: 0 auto;
+    background: var(--night-slate-deep);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-3d-dark-lg);
+    border-radius: var(--radius-block);
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+}
+
+.discord-title {
+    font-family: var(--font-heading);
+    font-size: 30px;
+    color: var(--crimson-light);
+    text-shadow:
+        2px 2px 0px var(--blood-red),
+        4px 4px 0px var(--wine-dark),
+        6px 6px 0px var(--border-dark);
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+}
+
+.discord-text {
+    font-size: 16px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    margin-bottom: 35px;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.discord-join-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--red-gradient);
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 16px 36px;
+    border: 2px solid var(--border-dark);
+    border-radius: var(--radius-block);
+    font-family: var(--font-heading);
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-3d-red-lg);
+    transition: all 0.12s ease;
+}
+
+.discord-join-btn:hover {
+    background: var(--red-gradient-hover);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--wine-dark), 3px 3px 0px var(--border-dark), 0 0 18px var(--torch-glow);
+}
+
+.discord-join-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 transparent;
+}
+
+.discord-icon-btn {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+    image-rendering: auto;
+}
+
+.btn-arrow {
+    font-size: 20px;
+    transition: transform 0.15s ease;
+}
+
+.discord-join-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+.discord-stats-small {
+    margin-top: 25px;
+    font-size: 14px;
+    color: var(--diamond-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.discord-online::before {
+    content: '● ';
+    color: #50C878;
+}
+
+/* ==========================================================================
+   12. FOOTER (Dunkles Schiefergrau & Fackellicht)
+   ========================================================================== */
+.footer {
+    background: var(--night-slate-deep);
+    border-top: 2px solid var(--border-dark);
+    padding: 60px 30px 30px;
+    position: relative;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    margin-bottom: 40px;
+}
+
+.footer-brand {
+    max-width: 420px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.footer-logo-img {
+    height: 46px;
+    width: auto;
+    max-width: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 0 var(--border-dark));
+}
+
+.footer-tagline {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.footer-col h4 {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    color: var(--torch-gold);
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s ease;
+}
+
+.footer-col ul li a:hover {
+    color: var(--torch-amber);
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 25px;
+    border-top: 1px solid rgba(13, 13, 13, 0.8);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+/* ==========================================================================
+   13. RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .steve-gif-container {
+        display: none;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        right: -100%;
+        width: 280px;
+        height: calc(100vh - 70px);
+        background: rgba(22, 27, 34, 0.98);
+        border-left: 2px solid var(--border-dark);
+        box-shadow: -4px 0 0 var(--border-dark);
+        flex-direction: column;
+        padding: 30px;
+        transition: right 0.25s ease;
+        gap: 18px;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .hero {
+        padding: 80px 20px 40px;
+    }
+
+    .hero-top {
+        margin-top: 5px;
+    }
+
+    .tagline {
+        font-size: 14px;
+        padding: 6px 14px;
+    }
+
+    .hero-content {
+        margin-top: clamp(100px, 25vw, 200px);
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .ip-box {
+        flex-direction: column;
+        gap: 8px;
+        padding: 14px 20px;
+        text-align: center;
+    }
+
+    .ip-address {
+        font-size: 18px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Join Section Responsive */
+    .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .join-showcase {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .join-section {
+        padding: 50px 0;
+    }
+
+    .preview-image-wrap {
+        padding: 12px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .footer-links {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 20px;
+    }
+
+    .step-card {
+        padding: 16px 14px;
+        gap: 12px;
+    }
+
+    .step-badge {
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+    }
+
+    .field-val {
+        font-size: 13.5px;
+    }
+
+    .field-val.gold-glow {
+        font-size: 15px;
+    }
+
+    .server-fields {
+        padding: 14px;
+        gap: 10px;
+    }
+
+    .join-note-box {
+        margin: 0 14px 14px;
+        padding: 10px 12px;
+    }
+
+    .platform-support {
+        padding: 0 14px 14px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .discord-banner {
+        padding: 40px 20px;
+    }
+
+    .discord-title {
+        font-size: 22px;
+    }
+
+    .discord-join-btn {
+        padding: 14px 24px;
+        font-size: 14px;
+    }
+}

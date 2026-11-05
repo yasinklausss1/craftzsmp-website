@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraftZ • Survival Server • craftz.cybrancee.games</title>
+    <meta name="description" content="CraftZ - Der beste Minecraft Bedrock Survival Server! Economy, Quests, Jobs und mehr. Jetzt beitreten!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="craftzlogo.png">
+</head>
+<body>
+    <!-- Animated Minecraft Background -->
+    <div class="minecraft-bg">
+        <div class="clouds"></div>
+        <div class="stars"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#home" class="nav-brand" title="CraftZ">
+                <img src="craftzlogo.png" alt="CraftZ" class="nav-logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#join">Beitreten</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#stats">Stats</a></li>
+                <li><a href="https://discord.gg/JNyefdvkBc" class="discord-btn" target="_blank">
+                    <img src="icons/discordicon.png" alt="Discord" class="discord-icon-small">
+                    Discord beitreten
+                </a></li>
+            </ul>
+            <button class="nav-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-spawn-image">
+            <img src="spawn.jfif" alt="CraftZ Spawn" class="spawn-bg">
+            <!-- Animated Steve GIF (hinter Blur, aber vor spawn.jfif) -->
+            <div class="steve-gif-container">
+                <img src="icons/minecraft-steve.gif" alt="Steve" class="steve-gif">
+            </div>
+        </div>
+
+        <!-- Tagline oberhalb von Willkommen zu CraftZ SMP -->
+        <div class="hero-top">
+            <p class="tagline">Der ultimative Survival Server mit <span class="highlight">Economy</span>, <span class="highlight">Quests</span> & <span class="highlight">Jobs</span>!</p>
+        </div>
+
+        <div class="hero-content">
+            <div class="server-ip-container">
+                <div class="grass-block-border" onclick="copyIP()" title="Klicken zum Kopieren">
+                    <div class="ip-box">
+                        <span class="ip-label">➤ Server IP:</span>
+                        <span class="ip-address" id="serverIP" data-ip="craftz.cybrancee.games">craftz.cybrancee.games</span>
+                        <span class="ip-click-hint">(Klick zum Kopieren)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-stats">
+                <div class="stat-pill">
+                    <img src="icons/player.png" alt="Players" class="stat-icon-img" onerror="this.style.display='none'">
+                    <span class="stat-text"><strong id="playerCount">0</strong> Spieler</span>
+                </div>
+                <div class="stat-pill">
+                    <img src="icons/online.png" alt="Online" class="stat-icon-img" onerror="this.style.display='none'">
+                    <span class="stat-text"><strong id="onlineCount">0</strong> Online</span>
+                </div>
+                <div class="stat-pill">
+                    <img src="icons/server.png" alt="Uptime" class="stat-icon-img" onerror="this.style.display='none'">
+                    <span class="stat-text"><strong>99.9%</strong> Uptime</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-icon">⚔️</span>
+                    Was kannst du auf CraftZ machen?
+                    <span class="title-icon">⚔️</span>
+                </h2>
+                <p class="section-subtitle">Langweilig wird's dir hier nicht!</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-box" data-color="gold">
+                    <img src="icons/gold_ingot.png" alt="Economy" class="feature-icon-img" onerror="this.innerHTML='💰'">
+                    <h3 class="feature-title">Wirtschaftssystem</h3>
+                    <div class="feature-description">
+                        <p><strong>Verdiene Geld</strong> durch Verkaufen, Handel und tägliche Belohnungen!</p>
+                        <ul class="feature-list">
+                            <li>→ 5-Stunden Bonus: <span class="money">$100+</span></li>
+                            <li>→ Verkaufe <strong>ALLES</strong> im Shop</li>
+                            <li>→ 28+ Items kaufbar</li>
+                            <li>→ Seltenheitssystem mit Preisen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-box" data-color="emerald">
+                    <img src="icons/ender_pearl.png" alt="Teleport" class="feature-icon-img" onerror="this.innerHTML='🏠'">
+                    <h3 class="feature-title">Teleport-System</h3>
+                    <div class="feature-description">
+                        <p>Setze bis zu <strong>25 Homes</strong> und teleportiere dich überall hin!</p>
+                        <ul class="feature-list">
+                            <li>→ /home - 25 Punkte pro Spieler</li>
+                            <li>→ /spawn - Zurück zum Spawn</li>
+                            <li>→ /rtp - Random Teleport</li>
+                            <li>→ Intelligente Boden-Erkennung</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-box" data-color="diamond">
+                    <img src="icons/chest.png" alt="Inventory" class="feature-icon-img" onerror="this.innerHTML='📦'">
+                    <h3 class="feature-title">Unendliches Inventar</h3>
+                    <div class="feature-description">
+                        <p>Für Admins: <strong>Unbegrenzter Speicher</strong> für verkaufte Items!</p>
+                        <ul class="feature-list">
+                            <li>→ Automatische Einlagerung</li>
+                            <li>→ Kein Platz-Problem mehr</li>
+                            <li>→ Multi-Owner Support</li>
+                            <li>→ GUI-basiertes System</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-box" data-color="redstone">
+                    <img src="icons/book.png" alt="Quests" class="feature-icon-img" onerror="this.innerHTML='📋'">
+                    <h3 class="feature-title">Quest-System</h3>
+                    <div class="feature-description">
+                        <p><strong>Tägliche Quests</strong> mit fetten Belohnungen!</p>
+                        <ul class="feature-list">
+                            <li>→ Sammle 64 Diamanten → <span class="money">$500</span></li>
+                            <li>→ Töte 100 Mobs → <span class="money">$200</span></li>
+                            <li>→ Baue 1000 Blöcke → <span class="money">$150</span></li>
+                            <li>→ Täglich neue Herausforderungen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-box" data-color="iron">
+                    <img src="icons/diamond_sword.png" alt="Skills" class="feature-icon-img" onerror="this.innerHTML='⭐'">
+                    <h3 class="feature-title">Skill-Leveling</h3>
+                    <div class="feature-description">
+                        <p>Levele deine Skills und werde zum <strong>Meister</strong>!</p>
+                        <ul class="feature-list">
+                            <li>→ Mining, Combat, Farming...</li>
+                            <li>→ Level 1-100 pro Skill</li>
+                            <li>→ Passive Boni beim Leveln</li>
+                            <li>→ Leaderboards & Rankings</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-box" data-color="grass">
+                    <img src="icons/compass.png" alt="HUD" class="feature-icon-img" onerror="this.innerHTML='📊'">
+                    <h3 class="feature-title">Live HUD-System</h3>
+                    <div class="feature-description">
+                        <p>Alle Infos <strong>immer im Blick</strong> - im Mineville-Style!</p>
+                        <ul class="feature-list">
+                            <li>→ Kontostand live anzeigen</li>
+                            <li>→ 5h-Timer Countdown</li>
+                            <li>→ Spielzeit-Tracker</li>
+                            <li>→ Mit !hud ein/ausschalten</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How To Join Section -->
+    <section class="join-section" id="join">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <img src="icons/book.png" alt="Book" class="title-icon-img">
+                    So trittst du bei
+                    <img src="icons/book.png" alt="Book" class="title-icon-img">
+                </h2>
+                <p class="section-subtitle">In 3 einfachen Schritten auf CraftZ durchstarten • Minecraft Bedrock Edition</p>
+            </div>
+
+            <!-- Steps Grid -->
+            <div class="steps-grid">
+                <!-- Step 1 -->
+                <div class="step-card">
+                    <div class="step-badge">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Minecraft starten</h3>
+                        <p class="step-desc">
+                            Starte Minecraft (Bedrock Edition) auf Handy, PC, Tablet oder Konsole. Klicke im Menü auf <strong>Spielen</strong> und wähle oben den Reiter <strong>Server</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card">
+                    <div class="step-badge">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Server hinzufügen</h3>
+                        <p class="step-desc">
+                            Scrolle in der Server-Liste ganz nach unten und klicke auf den Button <strong>„Server hinzufügen“</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card">
+                    <div class="step-badge">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Eintragen & Loslegen</h3>
+                        <p class="step-desc">
+                            Trage die Verbindungsdaten genau wie unten abgebildet ein und tippe auf <strong>Spielen</strong> (oder Speichern). Willkommen auf CraftZ!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Showcase: Interactive Data Box + In-Game Screenshot -->
+            <div class="join-showcase">
+                <!-- Left: Server Details Card -->
+                <div class="join-details-card">
+                    <div class="card-header">
+                        <div class="card-dots">
+                            <span class="card-dot red"></span>
+                            <span class="card-dot gold"></span>
+                            <span class="card-dot cyan"></span>
+                        </div>
+                        <span class="card-header-title">Verbindungsdaten (Klick zum Kopieren)</span>
+                    </div>
+
+                    <div class="server-fields">
+                        <!-- Servername -->
+                        <div class="server-field-item" onclick="copyJoinField('CraftZ', this)" title="Klicken zum Kopieren">
+                            <div class="field-label-row">
+                                <span class="field-label">Servername</span>
+                                <span class="field-hint">Klick zum Kopieren</span>
+                            </div>
+                            <div class="field-value-box">
+                                <span class="field-val">CraftZ</span>
+                                <span class="copy-badge">📋 Kopieren</span>
+                            </div>
+                        </div>
+
+                        <!-- Serveradresse -->
+                        <div class="server-field-item highlight-cyan" onclick="copyJoinField('craftz.cybrancee.games', this)" title="Klicken zum Kopieren">
+                            <div class="field-label-row">
+                                <span class="field-label">Serveradresse (IP)</span>
+                                <span class="field-hint">Klick zum Kopieren</span>
+                            </div>
+                            <div class="field-value-box">
+                                <span class="field-val cyan-glow">craftz.cybrancee.games</span>
+                                <span class="copy-badge">📋 Kopieren</span>
+                            </div>
+                        </div>
+
+                        <!-- Port -->
+                        <div class="server-field-item highlight-gold" onclick="copyJoinField('60453', this)" title="Klicken zum Kopieren">
+                            <div class="field-label-row">
+                                <span class="field-label">Port <span class="important-tag">Wichtig!</span></span>
+                                <span class="field-hint">Klick zum Kopieren</span>
+                            </div>
+                            <div class="field-value-box">
+                                <span class="field-val gold-glow">60453</span>
+                                <span class="copy-badge">📋 Kopieren</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="join-note-box">
+                        <div class="note-text">
+                            <strong>Wichtiger Hinweis zum Port:</strong>
+                            Minecraft trägt standardmäßig <code>19132</code> ein. Bitte unbedingt auf <strong>60453</strong> ändern, sonst schlägt die Verbindung fehl!
+                        </div>
+                    </div>
+
+                    <!-- Platform Support Badges -->
+                    <div class="platform-support">
+                        <span class="platform-title">Kompatible Plattformen:</span>
+                        <div class="platform-pills">
+                            <span class="platform-pill">📱 iOS / Android</span>
+                            <span class="platform-pill">💻 Windows 10/11</span>
+                            <span class="platform-pill">🎮 Xbox / PlayStation / Switch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Screenshot Preview -->
+                <div class="join-preview-card">
+                    <div class="preview-header">
+                        <span class="preview-title">So sieht es im Minecraft-Menü aus</span>
+                        <span class="preview-status">Bedrock GUI</span>
+                    </div>
+                    <div class="preview-image-wrap">
+                        <img src="how-to-join.png" alt="Minecraft Bedrock Server hinzufügen Anleitung" class="join-guide-img">
+                    </div>
+                    <div class="preview-caption">
+                        <span class="caption-icon">✔</span>
+                        Einfach genau so wie im Bild eintragen und auf <strong>Spielen</strong> klicken!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section" id="team">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Das Team</h2>
+                <p class="section-subtitle">Die Leute, die den Server am Laufen halten</p>
+            </div>
+
+            <div class="team-grid">
+                <!-- Mishu7510 - Gründer -->
+                <div class="team-card">
+                    <div class="minecraft-player-card">
+                        <div class="player-head">
+                            <img src="https://mc-heads.net/avatar/Mishu7510/128" alt="Mishu7510">
+                        </div>
+                        <div class="player-info">
+                            <h3 class="player-name">Mishu7510</h3>
+                            <div class="player-rank founder">Gründer & Entwickler</div>
+                            <p class="player-bio">
+                                Der Kopf hinter CraftZ! Programmiert das komplette Backend-System,
+                                managed die Server-Infrastruktur und entwickelt neue Features.
+                            </p>
+                            <div class="player-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Rang:</span>
+                                    <span class="stat-value">Owner</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PichPich1 - Admin -->
+                <div class="team-card">
+                    <div class="minecraft-player-card">
+                        <div class="player-head">
+                            <img src="https://mc-heads.net/avatar/PichPich1/128" alt="PichPich1">
+                        </div>
+                        <div class="player-info">
+                            <h3 class="player-name">PichPich1</h3>
+                            <div class="player-rank admin">Admin & Moderator</div>
+                            <p class="player-bio">
+                                Kümmert sich um die Community, moderiert den Discord,
+                                beantwortet Support-Anfragen und hilft bei Events.
+                            </p>
+                            <div class="player-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Rang:</span>
+                                    <span class="stat-value">Admin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <img src="icons/online.png" alt="Stats" class="title-icon-img">
+                    Server Statistiken
+                    <img src="icons/online.png" alt="Stats" class="title-icon-img">
+                </h2>
+                <p class="section-subtitle">Zahlen lügen nicht!</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-block">
+                    <img src="icons/player.png" alt="Players" class="stat-icon-img" onerror="this.innerHTML='👥'">
+                    <div class="stat-number">Bald verfügbar</div>
+                    <div class="stat-label">Registrierte Spieler</div>
+                </div>
+                <div class="stat-block">
+                    <img src="icons/emerald.png" alt="Money" class="stat-icon-img" onerror="this.innerHTML='💰'">
+                    <div class="stat-number">Bald verfügbar</div>
+                    <div class="stat-label">Geld im Umlauf</div>
+                </div>
+                <div class="stat-block">
+                    <img src="icons/book.png" alt="Quests" class="stat-icon-img" onerror="this.innerHTML='✅'">
+                    <div class="stat-number">Bald verfügbar</div>
+                    <div class="stat-label">Quests abgeschlossen</div>
+                </div>
+                <div class="stat-block">
+                    <img src="icons/bed.png" alt="Homes" class="stat-icon-img" onerror="this.innerHTML='🏠'">
+                    <div class="stat-number">Bald verfügbar</div>
+                    <div class="stat-label">Homes gesetzt</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Discord CTA -->
+    <section class="discord-section">
+        <div class="container">
+                <div class="discord-banner">
+                    <h2 class="discord-title">Komm in unseren Discord!</h2>
+                    <p class="discord-text">
+                        Chatte mit anderen Spielern, bleib auf dem Laufenden über Updates,
+                        bekomm Support und sei Teil der Community!
+                    </p>
+                    <a href="https://discord.gg/JNyefdvkBc" target="_blank" class="discord-join-btn">
+                        <img src="icons/discordicon.png" alt="Discord" class="discord-icon-btn">
+                        Discord beitreten
+                        <span class="btn-arrow">→</span>
+                    </a>
+                    <div class="discord-stats-small">
+                        <span class="discord-online">24/7 Support</span>
+                    </div>
+                </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="craftzlogo.png" alt="CraftZ" class="footer-logo-img">
+                    </div>
+                    <p class="footer-tagline">
+                        Premium Minecraft Bedrock Server<br>
+                        Made with ❤️ by cybrancee.games
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Server</h4>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#join">Beitreten</a></li>
+                            <li><a href="#team">Team</a></li>
+                            <li><a href="#stats">Stats</a></li>
+                            <li><a href="#">Regeln</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Community</h4>
+                        <ul>
+                            <li><a href="https://discord.gg/JNyefdvkBc" target="_blank">Discord</a></li>
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Impressum</a></li>
+                            <li><a href="#">Datenschutz</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CraftZ Server • Nicht mit Mojang verbunden</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
