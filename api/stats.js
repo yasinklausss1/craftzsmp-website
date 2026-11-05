@@ -11,15 +11,27 @@ const DEFAULT_STATS = {
 const SYNC_SECRET = process.env.STATS_SYNC_SECRET || "craftz_secret_sync_2026";
 
 function getRedisConfig() {
-    const url = process.env.KV_REST_API_URL || 
-                process.env.UPSTASH_REDIS_REST_URL || 
-                process.env.UPSTASH_REST_API_URL || 
-                process.env.REDIS_REST_URL;
+    let url = process.env.KV_REST_API_URL || 
+              process.env.UPSTASH_REDIS_REST_URL || 
+              process.env.UPSTASH_REST_API_URL || 
+              process.env.REDIS_REST_URL;
 
-    const token = process.env.KV_REST_API_TOKEN || 
-                  process.env.UPSTASH_REDIS_REST_TOKEN || 
-                  process.env.UPSTASH_REST_API_TOKEN || 
-                  process.env.REDIS_REST_TOKEN;
+    let token = process.env.KV_REST_API_TOKEN || 
+                process.env.UPSTASH_REDIS_REST_TOKEN || 
+                process.env.UPSTASH_REST_API_TOKEN || 
+                process.env.REDIS_REST_TOKEN;
+
+    if ((!url || !token) && process.env.REDIS_URL) {
+        try {
+            const parsed = new URL(process.env.REDIS_URL);
+            if (parsed.hostname && parsed.password) {
+                url = `https://${parsed.hostname}`;
+                token = decodeURIComponent(parsed.password);
+            }
+        } catch (e) {
+            console.error("Failed to parse REDIS_URL:", e);
+        }
+    }
 
     return { url, token };
 }
