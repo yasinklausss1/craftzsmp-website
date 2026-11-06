@@ -3,10 +3,10 @@
 const Redis = require('ioredis');
 
 const DEFAULT_STATS = {
-    registeredPlayers: 32,
-    moneyCirculation: 14750,
-    questsCompleted: 48,
-    homesSet: 39
+    registeredPlayers: 2,
+    moneyCirculation: 965,
+    questsCompleted: 1,
+    homesSet: 1
 };
 
 const SYNC_SECRET = process.env.STATS_SYNC_SECRET || "craftz_secret_sync_2026";
@@ -101,10 +101,14 @@ module.exports = async function handler(req, res) {
 
         const payload = req.body || {};
         const newStats = {
-            registeredPlayers: Number(payload.registeredPlayers) || DEFAULT_STATS.registeredPlayers,
-            moneyCirculation: Number(payload.moneyCirculation) || DEFAULT_STATS.moneyCirculation,
-            questsCompleted: Number(payload.questsCompleted) || DEFAULT_STATS.questsCompleted,
-            homesSet: Number(payload.homesSet) || DEFAULT_STATS.homesSet,
+            online: payload.online !== undefined ? Boolean(payload.online) : true,
+            onlinePlayers: typeof payload.onlinePlayers === 'number' ? Math.max(0, payload.onlinePlayers) : 0,
+            playerList: Array.isArray(payload.playerList) ? payload.playerList : [],
+            registeredPlayers: typeof payload.registeredPlayers === 'number' ? payload.registeredPlayers : DEFAULT_STATS.registeredPlayers,
+            moneyCirculation: typeof payload.moneyCirculation === 'number' ? payload.moneyCirculation : DEFAULT_STATS.moneyCirculation,
+            questsCompleted: typeof payload.questsCompleted === 'number' ? payload.questsCompleted : DEFAULT_STATS.questsCompleted,
+            homesSet: typeof payload.homesSet === 'number' ? payload.homesSet : DEFAULT_STATS.homesSet,
+            lastHeartbeat: Date.now(),
             lastUpdated: Date.now()
         };
 
@@ -124,8 +128,23 @@ module.exports = async function handler(req, res) {
             ...(redisStats || {})
         };
 
-        const isOnline = Boolean(pingData && pingData.online);
-        const onlinePlayers = pingData && pingData.players ? (pingData.players.online || 0) : 0;
+        // Server ist Online wenn:
+        // 1. Der Minecraft-Server innerhalb der letzten 180 Sekunden (3 Minuten) ein Heartbeat gesendet hat, ODER
+        // 2. mcstatus.io den Server als online meldet.
+        const heartbeatAge = redisStats && redisStats.lastHeartbeat ? (Date.now() - redisStats.lastHeartbeat) : Infinity;
+        const hasRecentHeartbeat = heartbeatAge < 180000;
+
+        let isOnline = false;
+        let onlinePlayers = 0;
+
+        if (hasRecentHeartbeat && redisStats.online) {
+            isOnline = true;
+            onlinePlayers = typeof redisStats.onlinePlayers === 'number' ? redisStats.onlinePlayers : 0;
+        } else if (pingData && pingData.online) {
+            isOnline = true;
+            onlinePlayers = pingData.players ? (pingData.players.online || 0) : 0;
+        }
+
         const maxPlayers = pingData && pingData.players ? (pingData.players.max || 50) : 50;
 
         res.status(200).json({

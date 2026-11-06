@@ -271,53 +271,59 @@ async function fetchServerStats() {
         if (!response.ok) return;
         const data = await response.json();
 
-        // 1. Update Live Player Count in Hero Header
+        // 1. Update Live Player Count & Status Pill
         const onlineCountEl = document.getElementById('onlineCount');
         if (onlineCountEl && typeof data.onlinePlayers === 'number') {
             onlineCountEl.textContent = data.onlinePlayers;
+            const parentPill = onlineCountEl.closest('.stat-pill');
+            if (parentPill) {
+                if (data.online) {
+                    parentPill.style.borderColor = 'rgba(74, 222, 128, 0.4)';
+                    onlineCountEl.style.color = '#4ade80';
+                } else {
+                    parentPill.style.borderColor = 'rgba(239, 68, 68, 0.25)';
+                    onlineCountEl.style.color = '#94a3b8';
+                }
+            }
+        }
+
+        const playerCountEl = document.getElementById('playerCount');
+        if (playerCountEl && typeof data.registeredPlayers === 'number') {
+            playerCountEl.textContent = data.registeredPlayers;
         }
 
         // 2. Update Stats Data Targets
         const regEl = document.getElementById('statRegisteredPlayers');
-        if (regEl && data.registeredPlayers) {
+        if (regEl && typeof data.registeredPlayers === 'number') {
             regEl.setAttribute('data-target', data.registeredPlayers);
-            if (!regEl.hasAttribute('data-target') || regEl.classList.contains('visible')) {
-                animateCounter(regEl);
-            }
+            animateCounter(regEl);
         }
 
         const moneyEl = document.getElementById('statMoneyCirculation');
-        if (moneyEl && data.moneyCirculation) {
+        if (moneyEl && typeof data.moneyCirculation === 'number') {
             moneyEl.setAttribute('data-target', data.moneyCirculation);
-            if (moneyEl.classList.contains('visible')) {
-                animateCounter(moneyEl);
-            }
+            animateCounter(moneyEl);
         }
 
         const questEl = document.getElementById('statQuestsCompleted');
-        if (questEl && data.questsCompleted) {
+        if (questEl && typeof data.questsCompleted === 'number') {
             questEl.setAttribute('data-target', data.questsCompleted);
-            if (questEl.classList.contains('visible')) {
-                animateCounter(questEl);
-            }
+            animateCounter(questEl);
         }
 
         const homesEl = document.getElementById('statHomesSet');
-        if (homesEl && data.homesSet) {
+        if (homesEl && typeof data.homesSet === 'number') {
             homesEl.setAttribute('data-target', data.homesSet);
-            if (homesEl.classList.contains('visible')) {
-                animateCounter(homesEl);
-            }
+            animateCounter(homesEl);
         }
     } catch (e) {
-        // Fallback already pre-filled in HTML data-target attributes
-        console.log('Using default stats fallback');
+        console.log('Error fetching stats:', e);
     }
 }
 
-// Fetch stats immediately and then refresh every 60 seconds
+// Fetch stats immediately and refresh every 30 seconds
 fetchServerStats();
-setInterval(fetchServerStats, 60000);
+setInterval(fetchServerStats, 30000);
 
 // Observe feature boxes
 document.querySelectorAll('.feature-box').forEach((box, index) => {
