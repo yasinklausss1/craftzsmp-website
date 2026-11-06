@@ -1281,6 +1281,11 @@ body {
     gap: 25px;
 }
 
+.stats-grid-two {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
 .stat-block {
     background: var(--shadow-moss);
     border: 2px solid var(--border-dark);

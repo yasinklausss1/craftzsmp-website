@@ -3,10 +3,8 @@
 const Redis = require('ioredis');
 
 const DEFAULT_STATS = {
-    registeredPlayers: 2,
-    moneyCirculation: 965,
-    questsCompleted: 1,
-    homesSet: 1
+    registeredPlayers: 1,
+    moneyCirculation: 965
 };
 
 const SYNC_SECRET = process.env.STATS_SYNC_SECRET || "craftz_secret_sync_2026";

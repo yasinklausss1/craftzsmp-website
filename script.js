@@ -305,17 +305,6 @@ async function fetchServerStats() {
             animateCounter(moneyEl);
         }
 
-        const questEl = document.getElementById('statQuestsCompleted');
-        if (questEl && typeof data.questsCompleted === 'number') {
-            questEl.setAttribute('data-target', data.questsCompleted);
-            animateCounter(questEl);
-        }
-
-        const homesEl = document.getElementById('statHomesSet');
-        if (homesEl && typeof data.homesSet === 'number') {
-            homesEl.setAttribute('data-target', data.homesSet);
-            animateCounter(homesEl);
-        }
     } catch (e) {
         console.log('Error fetching stats:', e);
     }
